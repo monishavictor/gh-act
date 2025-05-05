@@ -1,0 +1,11 @@
+{
+  "name": "gh-act",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/monishavictor/gh-act.git",
+  "author": "Monisha Victor <Monisha.Victor@ibm.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
