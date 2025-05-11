@@ -1,4 +1,4 @@
-# .github/actions/my-method/action.yml
+# .github/actions/common-action-2.yml
 name: "common2"
 description: "common method 2"
 inputs:
