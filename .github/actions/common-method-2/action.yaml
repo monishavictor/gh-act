@@ -1,4 +1,4 @@
-# .github/actions/common-action-2.yml
+# .github/actions/common-action-2/action.yaml
 name: "common2"
 description: "common method 2"
 inputs:
@@ -9,3 +9,4 @@ runs:
   using: "composite"
   steps:
     - run: echo "Bye, ${{ inputs.name }}!"
+      shell: bash
