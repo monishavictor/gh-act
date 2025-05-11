@@ -16,6 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: hello method
+      uses: ./.github/actions/common-action-1
+      with:
+        name: 'world'
     - name: Use Node.js 18.11.0
       uses: actions/setup-node@v4
       with:
@@ -23,3 +27,7 @@ jobs:
         cache: 'npm'
     - name: checking yarn version
       run: yarn --version
+    - name: bye method
+      uses: ./.github/actions/common-action-2
+      with:
+        name: 'world'

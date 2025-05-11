@@ -1,0 +1,11 @@
+# .github/actions/my-method/action.yml
+name: "common1"
+description: "common method 1"
+inputs:
+  name:
+    required: true
+    description: "Hello action"
+runs:
+  using: "composite"
+  steps:
+    - run: echo "Hello, ${{ inputs.name }}!"
