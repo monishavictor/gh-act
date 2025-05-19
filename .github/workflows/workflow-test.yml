@@ -78,7 +78,7 @@ jobs:
           echo "value:: ${value}"
   bye:
     runs-on: ubuntu-latest
-    needs: matrix-trial
+    needs: hello-job
     steps:
     - uses: actions/checkout@v4 
     - name: bye method
