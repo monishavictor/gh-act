@@ -9,62 +9,77 @@ on:
   pull_request:
     branches: [ "main" ]
 
-jobs:  
-  hello-job:
+jobs:
+  job1:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.hello.outputs.test1 }}
-      # output2: ${{ steps.hello.outputs.test2 }}
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
     steps:
-    - uses: actions/checkout@v4 
-    - name: hello
-      id: hello
-      uses: ./.github/actions/common-method-1
-      with:
-        name: 'world'
-  build:
+      - id: step1
+        run: echo "test=hello" >> "$GITHUB_OUTPUT"
+      - id: step2
+        run: echo "test=world" >> "$GITHUB_OUTPUT"
+  job2:
     runs-on: ubuntu-latest
-    needs: hello-job
-    steps:      
-    - uses: actions/checkout@v4
-    - name: pre-build         
-      env:
-        test1: ${{needs.hello-job.outputs.output1}}
-        # test2: ${{needs.hello.outputs.output2}}
-      run: |
-        echo "in pre-build"
-        echo "test1: ${test1}"
-        echo "leaving pre-build"
-        echo "pwd:: "
-        pwd
-        ls
-    - name: Use Node.js 18.11.0
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18.11.0
-        cache: 'npm'
-    - name: checking yarn version
-      run: yarn --version
-  matrix-trial:
-    runs-on: ubuntu-latest
-    needs: hello-job
-    strategy:
-      matrix:
-        values: [1]
+    needs: job1
     steps:
-      - name: step 1
-        run: |
-          value="${{matrix.values}}"
-          echo "value:: ${value}"
-  bye:
-    runs-on: ubuntu-latest
-    needs: matrix-trial
-    steps:
-    - uses: actions/checkout@v4 
-    - name: bye method
-      env:
-        test1: ${{needs.hello-job.outputs.output1}}
-        # test2: ${{needs.hello.outputs.output2}}        
-      uses: ./.github/actions/common-method-2
-      with:
-        name: 'world'
+      - env:
+          OUTPUT1: ${{needs.job1.outputs.output1}}
+          OUTPUT2: ${{needs.job1.outputs.output2}}
+        run: echo "$OUTPUT1 $OUTPUT2"  
+  # hello-job:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     output1: ${{ steps.hello.outputs.test1 }}
+  #   steps:
+  #   - uses: actions/checkout@v4 
+  #   - name: hello
+  #     id: hello
+  #     uses: ./.github/actions/common-method-1
+  #     with:
+  #       name: 'world'
+  # build:
+  #   runs-on: ubuntu-latest
+  #   needs: hello-job
+  #   steps:      
+  #   - uses: actions/checkout@v4
+  #   - name: pre-build         
+  #     env:
+  #       test1: ${{needs.hello-job.outputs.output1}}
+  #     run: |
+  #       echo "in pre-build"
+  #       echo "test1: ${test1}"
+  #       echo "leaving pre-build"
+  #       echo "pwd:: "
+  #       pwd
+  #       ls
+  #   - name: Use Node.js 18.11.0
+  #     uses: actions/setup-node@v4
+  #     with:
+  #       node-version: 18.11.0
+  #       cache: 'npm'
+  #   - name: checking yarn version
+  #     run: yarn --version
+  # matrix-trial:
+  #   runs-on: ubuntu-latest
+  #   needs: hello-job
+  #   strategy:
+  #     matrix:
+  #       values: [1]
+  #   steps:
+  #     - name: step 1
+  #       run: |
+  #         value="${{matrix.values}}"
+  #         echo "value:: ${value}"
+  # bye:
+  #   runs-on: ubuntu-latest
+  #   needs: matrix-trial
+  #   steps:
+  #   - uses: actions/checkout@v4 
+  #   - name: bye method
+  #     env:
+  #       test1: ${{needs.hello-job.outputs.output1}}
+  #     uses: ./.github/actions/common-method-2
+  #     with:
+  #       name: 'world'
