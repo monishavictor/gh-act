@@ -5,6 +5,9 @@ inputs:
   name:
     required: true
     description: "Hello action"
+outputs:
+  test1:
+    value: ${{ steps.step-1.outputs.test1 }}
 runs:
   using: "composite"
   steps:
@@ -18,5 +21,6 @@ runs:
         ls
         echo "${GITHUB_OUTPUT}"
         cat "${GITHUB_OUTPUT}"
-        echo "test1-id=hello" >> "$GITHUB_OUTPUT"
+        echo "test1=hello" >> "$GITHUB_OUTPUT"
       shell: bash
+      id: step-1
