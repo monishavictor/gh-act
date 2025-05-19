@@ -27,10 +27,7 @@ jobs:
     needs: hello
     steps:      
     - uses: actions/checkout@v4
-    - name: pre-build
-      with:
-        node-version: 18.11.0
-        cache: 'npm'          
+    - name: pre-build         
       env:
         test1: ${{needs.hello.outputs.output1}}
         test2: ${{needs.hello.outputs.output2}}
