@@ -17,4 +17,5 @@ runs:
         ls
         echo "Finish of pipeline."
         env
+        exit 1
       shell: bash
