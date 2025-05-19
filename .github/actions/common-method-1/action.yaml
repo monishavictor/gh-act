@@ -11,7 +11,7 @@ runs:
     - run: |
         echo "Hello, ${{ inputs.name }}!"
         echo "test1=hello" >> "$GITHUB_OUTPUT"
-        echo "test2=hello world" >> "$GITHUB_OUTPUT"
+        # echo "test2=hello world" >> "$GITHUB_OUTPUT"
         touch "mv-test.txt"
         echo "pwd:: "
         pwd        
