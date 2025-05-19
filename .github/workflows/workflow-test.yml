@@ -51,12 +51,12 @@ jobs:
     - name: pre-build         
       env:
         test1: ${{needs.hello-job.outputs.output1}}
+        test2: ${{needs.hello-job.outputs.output2}}
       run: |
         echo "in pre-build"
         echo "test1: ${test1}"
+        echo "test2: ${test2}"
         echo "leaving pre-build"
-        echo "pwd:: "
-        pwd
         ls
     - name: Use Node.js 18.11.0
       uses: actions/setup-node@v4

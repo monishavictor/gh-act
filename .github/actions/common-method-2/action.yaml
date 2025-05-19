@@ -16,4 +16,5 @@ runs:
         pwd       
         ls
         echo "Finish of pipeline."
+        env
       shell: bash
