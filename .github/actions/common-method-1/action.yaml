@@ -8,6 +8,8 @@ inputs:
 outputs:
   test1:
     value: ${{ steps.step-1.outputs.test1 }}
+  test2:
+    value: ${{ steps.step-1.outputs.test2 }}
 runs:
   using: "composite"
   steps:
@@ -22,5 +24,6 @@ runs:
         echo "${GITHUB_OUTPUT}"
         cat "${GITHUB_OUTPUT}"
         echo "test1=hello" >> "$GITHUB_OUTPUT"
+        echo "test2=world" >> "$GITHUB_OUTPUT"
       shell: bash
       id: step-1
