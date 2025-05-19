@@ -18,5 +18,5 @@ runs:
         ls
         echo "${GITHUB_OUTPUT}"
         cat "${GITHUB_OUTPUT}"
-        echo "test1=hello" >> "$GITHUB_OUTPUT"
+        echo "test1-id=hello" >> "$GITHUB_OUTPUT"
       shell: bash
