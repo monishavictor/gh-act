@@ -8,5 +8,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo "Hello, ${{ inputs.name }}!"
+    - run: |
+        echo "Hello, ${{ inputs.name }}!"
+        echo "test1=hello" >> "$GITHUB_OUTPUT"
+        echo "test2=hello world" >> "$GITHUB_OUTPUT"
       shell: bash

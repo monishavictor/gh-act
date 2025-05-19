@@ -10,5 +10,8 @@ runs:
   steps:
     - run: |
        echo "Bye, ${{ inputs.name }}!"
+       echo "Test1: ${test1}"
+       echo "Test2: ${test2}"
        echo "Finish of pipeline."
+
       shell: bash
