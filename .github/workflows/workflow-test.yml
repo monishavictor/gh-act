@@ -28,9 +28,6 @@ jobs:
     steps:      
     - uses: actions/checkout@v4
     - name: pre-build
-      strategy:
-        matrix:
-          version: [1]
       with:
         node-version: 18.11.0
         cache: 'npm'          
@@ -48,9 +45,20 @@ jobs:
         cache: 'npm'
     - name: checking yarn version
       run: yarn --version
+  matrix-trial:
+    runs-on: ubuntu-latest
+    needs: hello
+    strategy:
+      matrix:
+        values: [1, 2]
+    steps:
+      - name: step 1
+        run: |
+          value="${{matrix.values}}"
+          echo "value:: ${value}"
   bye:
     runs-on: ubuntu-latest
-    needs: build
+    needs: matrix-trial
     steps:
     - uses: actions/checkout@v4 
     - name: bye method
