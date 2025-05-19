@@ -10,13 +10,18 @@ on:
     branches: [ "main" ]
 
 jobs:  
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
   hello:
     runs-on: ubuntu-latest
+    needs: checkout
     outputs:
       output1: ${{ steps.hello.outputs.test1 }}
       output2: ${{ steps.hello.outputs.test2 }}
     steps:
-    - uses: actions/checkout@v4 
+    # - uses: actions/checkout@v4 
     - name: hello method
       id: hello
       uses: ./.github/actions/common-method-1
