@@ -8,5 +8,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo "Bye, ${{ inputs.name }}!"
+    - run: |
+       echo "Bye, ${{ inputs.name }}!"
+       echo "Finish of pipeline."
       shell: bash
