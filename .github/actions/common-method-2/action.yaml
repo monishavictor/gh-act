@@ -9,10 +9,11 @@ runs:
   using: "composite"
   steps:
     - run: |
-       echo "Bye, ${{ inputs.name }}!"
-       echo "Test1: ${test1}"
-       echo "Test2: ${test2}"
-       ls
-       echo "Finish of pipeline."
-
+        echo "Bye, ${{ inputs.name }}!"
+        echo "Test1: ${test1}"
+        echo "Test2: ${test2}"
+        echo "pwd:: "
+        pwd       
+        ls
+        echo "Finish of pipeline."
       shell: bash
