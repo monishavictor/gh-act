@@ -3,12 +3,16 @@
 
 name: ci
 
+env:
+  MY_SECRET: ${{ secrets.MY_REPO_SECRET }}
+
 on:
   # push:
   #   branches: ['master', 'release-*', 'development', 'bugfix/*', 'feat/*']
   pull_request:
     branches: ['master', 'release-*', 'development', 'main']
 jobs:
+
   hello-job:
     runs-on: ubuntu-latest
     steps:
@@ -53,7 +57,7 @@ jobs:
         echo "-----"
         env
 
-  job1:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -62,7 +66,7 @@ jobs:
       run: |
         echo "Run pre-commit hooks & Type check"
 
-  job2:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -70,7 +74,7 @@ jobs:
       id: 'run-unit-tests'
       run: |
         echo "Run Unit tests"
-  job3:
+  build-image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -79,9 +83,9 @@ jobs:
       run: |
         echo "Build Application container"
 
-  job4:
+  e2e-1:
     runs-on: ubuntu-latest
-    needs: ['job1', 'job2', 'job3']
+    needs: ['pre-commit', 'unit-tests', 'build-image']
     steps:
     - uses: actions/checkout@v4
     - name: e2e - bucket 1
@@ -89,9 +93,9 @@ jobs:
       run: |
         echo "e2e - bucket 1"
 
-  job5:
+  e2e-2:
     runs-on: ubuntu-latest
-    needs: ['job1', 'job2', 'job3']
+    needs: ['pre-commit', 'unit-tests', 'build-image']
     steps:
     - uses: actions/checkout@v4
     - name: e2e - bucket 2
@@ -99,9 +103,9 @@ jobs:
       run: |
         echo "e2e - bucket 2"
 
-  job6:
+  e2e-3:
     runs-on: ubuntu-latest
-    needs: ['job1', 'job2', 'job3']
+    needs: ['pre-commit', 'unit-tests', 'build-image']
     steps:
     - uses: actions/checkout@v4
     - name: e2e - bucket 3
@@ -109,9 +113,9 @@ jobs:
       run: |
         echo "e2e - bucket 3"
 
-  job7:
+  e2e-4:
     runs-on: ubuntu-latest
-    needs: ['job1', 'job2', 'job3']
+    needs: ['pre-commit', 'unit-tests', 'build-image']
     steps:
     - uses: actions/checkout@v4
     - name: e2e - bucket 4
@@ -119,9 +123,9 @@ jobs:
       run: |
         echo "e2e - bucket 4"
 
-  job8a:
+  push-dev:
     runs-on: ubuntu-latest
-    needs: [job4, job5, job6, job7]
+    needs: [e2e-1, e2e-2, e2e-3, e2e-4]
     if: github.base_ref == 'main'
     steps:
       - uses: actions/checkout@v4
@@ -129,9 +133,9 @@ jobs:
         run: |
           echo "push image to registry - main"
 
-  job8b:
+  push-release:
     runs-on: ubuntu-latest
-    needs: [job4, job5, job6, job7]
+    needs: [e2e-1, e2e-2, e2e-3, e2e-4]
     if: github.base_ref == 'release'
     steps:
       - uses: actions/checkout@v4
@@ -139,18 +143,18 @@ jobs:
         run: |
           echo "push image to registry - release"
 
-  job9:
+  build-dev:
     runs-on: ubuntu-latest
-    needs: job8a
+    needs: push-dev
     steps:
       - uses: actions/checkout@v4
       - name: 'build feat env'
         run: |
           echo "build feat environment"
 
-  job10:
+  build-release:
     runs-on: ubuntu-latest
-    needs: job8b
+    needs: push-release
     steps:
       - uses: actions/checkout@v4
       - name: 'build feat env - release'
