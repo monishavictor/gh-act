@@ -47,3 +47,5 @@ jobs:
         echo "-----"
 
         cat "${GITHUB_EVENT_PATH}"
+
+        ./scripts/gh-actions/is_open_pull_request.sh
