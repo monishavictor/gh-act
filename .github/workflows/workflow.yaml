@@ -5,6 +5,7 @@ name: ci
 
 env:
   MY_SECRET: ${{ secrets.MY_GITHUB_TOKEN }}
+  MY_VAR_FROM_REPO: ${{ vars.MY_GITHUB_VARIABLE }}
   
 
 on:
