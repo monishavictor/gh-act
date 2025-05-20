@@ -6,7 +6,7 @@ name: ci
 env:
   MY_SECRET: ${{ secrets.MY_GITHUB_TOKEN }}
   MY_VAR_FROM_REPO: ${{ vars.MY_GITHUB_VARIABLE }}
-  
+
 
 on:
   # push:
@@ -59,31 +59,44 @@ jobs:
         echo "-----"
         env
 
-  # pre-commit:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Run pre-commit hooks & Type check
-  #     id: 'pre-commit'
-  #     run: |
-  #       echo "Run pre-commit hooks & Type check"
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run pre-commit hooks & Type check
+      id: 'pre-commit'
+      run: |
+        echo "Run pre-commit hooks & Type check"
 
-  # unit-tests:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Run Unit tests
-  #     id: 'run-unit-tests'
-  #     run: |
-  #       echo "Run Unit tests"
-  # build-image:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v4
-  #   - name: Build Application container
-  #     id: 'build-container-image'
-  #     run: |
-  #       echo "Build Application container"
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run Unit tests
+      id: 'run-unit-tests'
+      run: |
+        echo "Run Unit tests"
+  build-image:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Application container
+      id: 'build-container-image'
+      run: |
+        echo "Build Application container"
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: ['pre-commit', 'unit-tests', 'build-image']
+    strategy:
+      matrix:
+        test-buckets: ['sap', 'vmware', 'common', 'powervs']
+    steps:
+    - uses: actions/checkout@v4
+    - name: e2e test
+      run: |
+        bucket="${{matrix.test-buckets}}"
+        echo "Bucket:: ${bucket}"
 
   # e2e-1:
   #   runs-on: ubuntu-latest
@@ -125,40 +138,40 @@ jobs:
   #     run: |
   #       echo "e2e - bucket 4"
 
-  # push-dev:
-  #   runs-on: ubuntu-latest
-  #   needs: [e2e-1, e2e-2, e2e-3, e2e-4]
-  #   if: github.base_ref == 'main'
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: 'push image to registry for main'
-  #       run: |
-  #         echo "push image to registry - main"
+  push-dev:
+    runs-on: ubuntu-latest
+    needs: [e2e-tests]
+    if: github.base_ref == 'main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'push image to registry for main'
+        run: |
+          echo "push image to registry - main"
 
-  # push-release:
-  #   runs-on: ubuntu-latest
-  #   needs: [e2e-1, e2e-2, e2e-3, e2e-4]
-  #   if: github.base_ref == 'release'
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: 'push img for release'
-  #       run: |
-  #         echo "push image to registry - release"
+  push-release:
+    runs-on: ubuntu-latest
+    needs: [e2e-tests]
+    if: github.base_ref == 'release'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'push img for release'
+        run: |
+          echo "push image to registry - release"
 
-  # build-dev:
-  #   runs-on: ubuntu-latest
-  #   needs: push-dev
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: 'build feat env'
-  #       run: |
-  #         echo "build feat environment"
+  build-dev:
+    runs-on: ubuntu-latest
+    needs: push-dev
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'build feat env'
+        run: |
+          echo "build feat environment"
 
-  # build-release:
-  #   runs-on: ubuntu-latest
-  #   needs: push-release
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: 'build feat env - release'
-  #       run: |
-  #         echo "build feat environment - release"          
+  build-release:
+    runs-on: ubuntu-latest
+    needs: push-release
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'build feat env - release'
+        run: |
+          echo "build feat environment - release"          
