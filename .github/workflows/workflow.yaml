@@ -7,7 +7,7 @@ on:
   # push:
   #   branches: ['master', 'release-*', 'development', 'bugfix/*', 'feat/*']
   pull_request:
-    branches: ['master', 'release-*', 'development']    
+    branches: ['master', 'release-*', 'development', 'main']
 jobs:
   hello-job:
     runs-on: ubuntu-latest
