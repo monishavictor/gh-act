@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: ci
 
 on:
   push:
@@ -15,4 +15,31 @@ jobs:
       id: hello
       run: |
         echo "hello"
+        echo "GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}"
+        echo "${GITHUB_PATH}"
+        echo "GITHUB_ACTION: ${GITHUB_ACTION}"
+        echo "${GITHUB_RUN_NUMBER}"
+        echo "${RUNNER_NAME}"
+        echo "GITHUB_REPOSITORY_OWNER_ID: ${GITHUB_REPOSITORY_OWNER_ID}"
+        echo "${GITHUB_TRIGGERING_ACTOR}"
+        echo "${GITHUB_REF_TYPE}"
+        echo "${GITHUB_REPOSITORY_ID}"
+        echo "${GITHUB_SHA}"
+        echo "${GITHUB_WORKFLOW_REF}"
+        echo "${GITHUB_REF}"
+        echo "${GITHUB_API_URL}"
+        echo "${GITHUB_EVENT_PATH}"
+        echo "${GITHUB_EVENT_NAME}"
+        echo "${GITHUB_STEP_SUMMARY}"
+        echo "${GITHUB_ACTOR}"
+        echo "${GITHUB_SERVER_URL}"
+        echo "${GITHUB_WORKFLOW_SHA}"
+        echo "${GITHUB_REF_NAME}"
+        echo "${GITHUB_JOB}"
+        echo "${GITHUB_REPOSITORY}"
+        echo "${GITHUB_BASE_REF}"
+        echo "${GITHUB_REPOSITORY_OWNER}"
+        echo "${GITHUB_HEAD_REF}"
+        echo "${GITHUB_ACTION_REF}"
+        echo "${GITHUB_OUTPUT}"
         env
