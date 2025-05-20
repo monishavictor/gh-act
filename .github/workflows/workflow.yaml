@@ -119,7 +119,7 @@ jobs:
   job8a:
     runs-on: ubuntu-latest
     needs: [job4, job5, job6, job7]
-    if: GITHUB_BASE_REF == 'main'
+    if: github.base_ref == 'main'
     steps:
       - uses: actions/checkout@v4
       - name: 'push image to registry for main'
@@ -129,7 +129,7 @@ jobs:
   job8b:
     runs-on: ubuntu-latest
     needs: [job4, job5, job6, job7]
-    if: GITHUB_BASE_REF == 'release'
+    if: github.base_ref == 'release'
     steps:
       - uses: actions/checkout@v4
       - name: 'push img for release'
