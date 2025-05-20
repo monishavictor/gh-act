@@ -49,3 +49,70 @@ jobs:
         cat "${GITHUB_EVENT_PATH}"
 
         ./scripts/gh-actions/is_open_pull_request.sh
+
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run pre-commit hooks & Type check
+      id: 'pre-commit'
+      run: |
+        echo "Run pre-commit hooks & Type check"
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run Unit tests
+      id: 'run-unit-tests'
+      run: |
+        echo "Run Unit tests"
+  job3:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Application container
+      id: 'build-container-image'
+      run: |
+        echo "Build Application container"
+
+  job4:
+    runs-on: ubuntu-latest
+    needs: ['job1', 'job2', 'job3']
+    steps:
+    - uses: actions/checkout@v4
+    - name: e2e - bucket 1
+      id: 'e2e-bucket-1'
+      run: |
+        echo "e2e - bucket 1"
+
+  job5:
+    runs-on: ubuntu-latest
+    needs: ['job1', 'job2', 'job3']
+    steps:
+    - uses: actions/checkout@v4
+    - name: e2e - bucket 2
+      id: 'e2e-bucket-2'
+      run: |
+        echo "e2e - bucket 2"
+
+  job6:
+    runs-on: ubuntu-latest
+    needs: ['job1', 'job2', 'job3']
+    steps:
+    - uses: actions/checkout@v4
+    - name: e2e - bucket 3
+      id: 'e2e-bucket-3'
+      run: |
+        echo "e2e - bucket 3"
+
+  job7:
+    runs-on: ubuntu-latest
+    needs: ['job1', 'job2', 'job3']
+    steps:
+    - uses: actions/checkout@v4
+    - name: e2e - bucket 4
+      id: 'e2e-bucket-4'
+      run: |
+        echo "e2e - bucket 4"
+
