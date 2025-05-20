@@ -116,3 +116,40 @@ jobs:
       run: |
         echo "e2e - bucket 4"
 
+  job8a:
+    runs-on: ubuntu-latest
+    needs: [job4, job5, job6, job7]
+    if: GITHUB_BASE_REF == 'main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'push image to registry for main'
+        run: |
+          echo "push image to registry - main"
+
+  job8b:
+    runs-on: ubuntu-latest
+    needs: [job4, job5, job6, job7]
+    if: GITHUB_BASE_REF == 'release'
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'push img for release'
+        run: |
+          echo "push image to registry - release"
+
+  job9:
+    runs-on: ubuntu-latest
+    needs: job8a
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'build feat env'
+        run: |
+          echo "build feat environment"
+
+  job10:
+    runs-on: ubuntu-latest
+    needs: job8b
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'build feat env - release'
+        run: |
+          echo "build feat environment - release"          
