@@ -39,7 +39,7 @@ jobs:
         echo "GITHUB_REF_NAME: ${GITHUB_REF_NAME}"
         echo "${GITHUB_JOB}"
         echo "GITHUB_REPOSITORY: ${GITHUB_REPOSITORY}"
-        echo "${GITHUB_BASE_REF}"
+        echo "GITHUB_BASE_REF: ${GITHUB_BASE_REF}"
         echo "GITHUB_REPOSITORY_OWNER: ${GITHUB_REPOSITORY_OWNER}"
         echo "GITHUB_HEAD_REF: ${GITHUB_HEAD_REF}"
         echo "${GITHUB_ACTION_REF}"
