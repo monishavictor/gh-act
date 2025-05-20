@@ -47,8 +47,11 @@ jobs:
         echo "-----"
 
         cat "${GITHUB_EVENT_PATH}"
+        echo "-----"
 
         ./scripts/gh-actions/is_open_pull_request.sh
+        echo "-----"
+        env
 
   job1:
     runs-on: ubuntu-latest
