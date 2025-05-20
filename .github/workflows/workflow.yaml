@@ -4,7 +4,7 @@
 name: ci
 
 env:
-  MY_SECRET: ${{ secrets.MY_REPO_SECRET }}
+  MY_SECRET: ${{ secrets.MY_GITHUB_TOKEN }}
 
 on:
   # push:
