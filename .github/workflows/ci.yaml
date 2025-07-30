@@ -38,7 +38,7 @@ jobs:
     needs: code-checks
     strategy:
       matrix:
-        values: [1]
+        values: ['e2e-1', 'e2e-2', 'e2e-3', 'e2e-4']
     steps:
       - name: E2E Tests - ${{matrix.values}}
         run: |
@@ -79,6 +79,7 @@ jobs:
   build-feat-env:
     runs-on: ubuntu-latest
     needs: push-dev-registry
+    if: startsWith(github.ref, 'refs/heads/feature')
     steps:      
     # - uses: actions/checkout@v4
     - name: Build Feature Environment
@@ -88,6 +89,7 @@ jobs:
   code-engine-deploy:
     runs-on: ubuntu-latest
     needs: push-dev-registry
+    if: github.ref == 'refs/heads/development'
     steps:      
     - uses: actions/checkout@v4
     - name: Build Feature Environment
