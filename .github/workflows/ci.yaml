@@ -1,21 +1,13 @@
 name: Sample CI
 
 on:
-  push:
+  pull_request:
     branches:
       - development
       - master
       - releases*
-      - feature*
-      - feat*
-      - bugfix*
-      - fix*
-      - hotfix*
-      - collection*
-      - test*
-      - whitesource-remediation*
-jobs:
 
+jobs:
   code-checks:
     runs-on: ubuntu-latest
     steps:
@@ -52,8 +44,11 @@ jobs:
     steps:      
     # - uses: actions/checkout@v4
     - name: Build Feature Environment
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}    
       run: |
         echo "in push dev registry"
+        echo "$GITHUB_CONTEXT"        
 
   push-non-dev-registry:
     runs-on: ubuntu-latest
