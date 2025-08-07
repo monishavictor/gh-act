@@ -1,8 +1,8 @@
 #!/bin/bash
 
-printenv
+# printenv
 
-# echo "Check if PR \"$TRAVIS_BRANCH\" has a feature app label."
+echo "Check if PR \"$GITHUB_HEAD_REF\" has a feature app label."
 
 if ! command -v gh &> /dev/null
 then
