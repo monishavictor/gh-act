@@ -1,7 +1,7 @@
-name: Sample CI
+name: Sample PR
 
 on:
-  push:
+  pull_request:
     branches:
       - development
       - master
@@ -33,11 +33,11 @@ jobs:
       - name: E2E Tests
         with:
           bucket: 'bucket-value'
-        uses: ./.github/actions/e2e-tests
+        uses: ./.github/actions/e2e-tests   
 
-  push-dev-registry:
+  push-non-dev-registry:
     runs-on: ubuntu-latest
-    if: github.ref == 'development'
+    if: github.base_ref == 'development' || startsWith(github.base_ref, 'release')
     needs: e2e-tests
     steps:      
     # - uses: actions/checkout@v4
@@ -45,25 +45,24 @@ jobs:
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}    
       run: |
-        echo "in push dev registry"
-        echo "$GITHUB_CONTEXT"    
+        echo "in non dev registry"
+        echo "$GITHUB_CONTEXT"        
 
-  code-engine-deploy:
+  build-feat-env:
     runs-on: ubuntu-latest
-    needs: push-dev-registry
-    if: github.ref == 'development'
+    needs: push-non-dev-registry
+    if: startsWith(github.base_ref, 'development')
     steps:      
     - uses: actions/checkout@v4
     - name: Build Feature Environment
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        MY_TOKEN: ${{ secrets.MY_REPO_SECRET }}    
       run: |
-        echo "code engine deploy based on checks in script"
-
-  push-prod-registry:
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'release')
-    needs: e2e-tests
-    steps:      
-    # - uses: actions/checkout@v4
-    - name: Build Feature Environment
-      run: |
-        echo "in prod registry"
+        echo "build feature environment based on script"
+        echo "----"
+        pwd
+        echo "-----"
+        ls
+        echo "-----"
+        ./scripts/is_feature_app.sh
