@@ -12,8 +12,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        echo "Hello, ${{ inputs.name }}!"
-        echo "${bucket}"
+        echo "Bucket, ${{ inputs.bucket }}!"
         echo "status=success" >> "$GITHUB_OUTPUT"
       shell: bash
       id: step-1
