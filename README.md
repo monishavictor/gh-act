@@ -1,3 +1,3 @@
 # gh-act
 
-testing gh actions - 1
+testing gh actions - 2
