@@ -80,10 +80,10 @@ jobs:
     if: startsWith(github.base_ref, 'development')
     steps:      
     - uses: actions/checkout@v4
-    - env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        MY_TOKEN: ${{ secrets.MY_REPO_SECRET }}
     - name: Build Feature Environment
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        MY_TOKEN: ${{ secrets.MY_REPO_SECRET }}    
       run: |
         echo "build feature environment based on script"
         echo "----"
