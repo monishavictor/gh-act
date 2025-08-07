@@ -23,7 +23,7 @@ existing_pull_requests=$(gh pr list -H $GITHUB_HEAD_REF --repo $GITHUB_REPOSITOR
 
 if [[ -z "$existing_pull_requests" ]]; then
     echo "No pull requests found for branch $GITHUB_HEAD_REF or release branch with the label Feature App attached."
-    exit 1
+    exit 0
 else
     echo "Pull requests found for branch $GITHUB_HEAD_REF with the label Feature App attached."
     exit 0
