@@ -57,8 +57,11 @@ jobs:
     steps:      
     # - uses: actions/checkout@v4
     - name: Build Feature Environment
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}    
       run: |
         echo "in non dev registry"
+        echo "$GITHUB_CONTEXT"        
 
   push-prod-registry:
     runs-on: ubuntu-latest
