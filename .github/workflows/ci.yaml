@@ -30,7 +30,7 @@ jobs:
     needs: code-checks
     steps:
       - name: E2E Tests
-        inputs:
+        with:
           bucket: 'bucket-value'
         run: |
           echo "${bucket}"
