@@ -33,8 +33,6 @@ jobs:
         with:
           bucket: 'bucket-value'
         uses: ./e2e-tests
-        run: |
-          echo "${bucket}"
 
   # push-dev-registry:
   #   runs-on: ubuntu-latest
