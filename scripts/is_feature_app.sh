@@ -2,8 +2,6 @@
 
 printenv
 
-gh
-
 # echo "Check if PR \"$TRAVIS_BRANCH\" has a feature app label."
 
 if ! command -v gh &> /dev/null
@@ -25,6 +23,7 @@ if [[ -z "$existing_pull_requests" ]]; then
     echo "No pull requests found for branch $GITHUB_HEAD_REF or release branch with the label Feature App attached."
     exit 0
 else
+    echo "${existing_pull_requests}"
     echo "Pull requests found for branch $GITHUB_HEAD_REF with the label Feature App attached."
     exit 0
 fi
