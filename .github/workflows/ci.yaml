@@ -80,6 +80,7 @@ jobs:
     - name: Build Feature Environment
       run: |
         echo "build feature environment based on script"
+        ./scripts/is_feature_app.sh
 
   code-engine-deploy:
     runs-on: ubuntu-latest
