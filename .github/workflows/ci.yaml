@@ -37,22 +37,22 @@ jobs:
           value="${{matrix.values}}"
           echo "value:: ${value}"
 
-  push-dev-registry:
-    runs-on: ubuntu-latest
-    if: github.base_ref == 'refs/heads/development'
-    needs: e2e-tests
-    steps:      
-    # - uses: actions/checkout@v4
-    - name: Build Feature Environment
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}    
-      run: |
-        echo "in push dev registry"
-        echo "$GITHUB_CONTEXT"        
+  # push-dev-registry:
+  #   runs-on: ubuntu-latest
+  #   if: github.base_ref == 'development'
+  #   needs: e2e-tests
+  #   steps:      
+  #   # - uses: actions/checkout@v4
+  #   - name: Build Feature Environment
+  #     env:
+  #       GITHUB_CONTEXT: ${{ toJson(github) }}    
+  #     run: |
+  #       echo "in push dev registry"
+  #       echo "$GITHUB_CONTEXT"        
 
   push-non-dev-registry:
     runs-on: ubuntu-latest
-    if: github.base_ref != 'refs/heads/development' && !startsWith(github.base_ref, 'refs/heads/release')
+    if: github.base_ref != 'development' && !startsWith(github.base_ref, 'release')
     needs: e2e-tests
     steps:      
     # - uses: actions/checkout@v4
@@ -65,7 +65,7 @@ jobs:
 
   push-prod-registry:
     runs-on: ubuntu-latest
-    if: startsWith(github.base_ref, 'refs/heads/release')
+    if: startsWith(github.base_ref, 'release')
     needs: e2e-tests
     steps:      
     # - uses: actions/checkout@v4
@@ -77,7 +77,7 @@ jobs:
   build-feat-env:
     runs-on: ubuntu-latest
     needs: push-non-dev-registry
-    if: startsWith(github.base_ref, 'refs/heads/development')
+    if: startsWith(github.base_ref, 'development')
     steps:      
     # - uses: actions/checkout@v4
     - name: Build Feature Environment
@@ -88,7 +88,7 @@ jobs:
   code-engine-deploy:
     runs-on: ubuntu-latest
     needs: push-dev-registry
-    if: github.base_ref == 'refs/heads/development'
+    if: github.base_ref == 'development'
     steps:      
     - uses: actions/checkout@v4
     - name: Build Feature Environment
