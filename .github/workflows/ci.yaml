@@ -33,7 +33,7 @@ jobs:
       - name: E2E Tests
         with:
           bucket: 'bucket-value'
-        uses: ./e2e-tests
+        uses: ./.github/actions/e2e-tests
 
   # push-dev-registry:
   #   runs-on: ubuntu-latest
