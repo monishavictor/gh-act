@@ -50,7 +50,7 @@ jobs:
 
   build-feat-env:
     runs-on: ubuntu-latest
-    needs: push-non-dev-registry
+    needs: push-to-registry
     if: startsWith(github.base_ref, 'development')
     steps:      
     - uses: actions/checkout@v4
