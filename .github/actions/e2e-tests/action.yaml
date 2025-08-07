@@ -1,0 +1,19 @@
+# .github/actions/common-action-1/action.yaml
+name: "common1"
+description: "common method 1"
+inputs:
+  bucket:
+    required: true
+    description: "e2e bucket"
+outputs:
+  status:
+    value: ${{ steps.step-1.outputs.status }}
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "Hello, ${{ inputs.name }}!"
+        echo "${bucket}"
+        echo "status=success" >> "$GITHUB_OUTPUT"
+      shell: bash
+      id: step-1
