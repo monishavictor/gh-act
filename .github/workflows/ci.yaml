@@ -52,7 +52,7 @@ jobs:
 
   push-non-dev-registry:
     runs-on: ubuntu-latest
-    if: github.base_ref != 'development' && !startsWith(github.base_ref, 'release')
+    if: github.base_ref == 'development' || startsWith(github.base_ref, 'release')
     needs: e2e-tests
     steps:      
     # - uses: actions/checkout@v4
